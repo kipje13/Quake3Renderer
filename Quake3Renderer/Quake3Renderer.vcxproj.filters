@@ -15,11 +15,31 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="main.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="glad.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="main.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="pk3.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="window.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="bsp.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="pk3.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="window.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="bsp.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

@@ -1,12 +1,28 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
+#include "bsp.h"
+
 #include <stdio.h>
+#include <stdlib.h>
 
 double prevTime = 0;
 
 int main()
 {
+	FILE* f = fopen("G:\\Github\\Quake3Renderer\\Debug\\ct3tourney3.bsp", "rb");
+
+	fseek(f, 0, SEEK_END);
+	int filesize = ftell(f);
+	rewind(f);
+
+	char* bspdata = (char*)malloc(sizeof(char) * filesize);
+	fread(bspdata, sizeof(char), filesize, f);
+
+	fclose(f);
+
+	loadbsp(bspdata);
+
 	glfwInit();
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
@@ -37,8 +53,6 @@ int main()
 
 		double delta = glfwGetTime() - prevTime;
 		prevTime = glfwGetTime();
-
-		printf("%lf fps\n", 1/delta);
 
 		glfwSwapBuffers(window);
 		glfwPollEvents();
