@@ -72,11 +72,6 @@ BSP* loadbsp(char* data)
 	bsp->visdata = data + lumps[16].offset;
 	bsp->visdata->vecs = bsp->visdata + sizeof(int) * 2;
 
-	for (int i = 0; i < bsp->n_textures; i++)
-	{
-		printf("%s\n", bsp->textures[i].name);
-	}
-
 	return bsp;
 }
 

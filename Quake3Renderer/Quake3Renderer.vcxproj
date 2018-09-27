@@ -124,6 +124,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="bsp.c" />
+    <ClCompile Include="game.c" />
     <ClCompile Include="glad.c" />
     <ClCompile Include="main.c" />
     <ClCompile Include="pk3.c" />
@@ -131,6 +132,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="bsp.h" />
+    <ClInclude Include="game.h" />
     <ClInclude Include="pk3.h" />
     <ClInclude Include="window.h" />
   </ItemGroup>

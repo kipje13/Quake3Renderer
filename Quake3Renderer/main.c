@@ -1,7 +1,7 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
-#include "bsp.h"
+#include "game.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -10,18 +10,7 @@ double prevTime = 0;
 
 int main()
 {
-	FILE* f = fopen("G:\\Github\\Quake3Renderer\\Debug\\ct3tourney3.bsp", "rb");
-
-	fseek(f, 0, SEEK_END);
-	int filesize = ftell(f);
-	rewind(f);
-
-	char* bspdata = (char*)malloc(sizeof(char) * filesize);
-	fread(bspdata, sizeof(char), filesize, f);
-
-	fclose(f);
-
-	loadbsp(bspdata);
+	load();
 
 	glfwInit();
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
@@ -44,15 +33,16 @@ int main()
 		return -1;
 	}
 
+	glfwSetFramebufferSizeCallback(window, resize);
+
+	start();
+
 	while (!glfwWindowShouldClose(window))
 	{
-		glClearColor(1, 0, 1, 1);
-		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-		
-
 		double delta = glfwGetTime() - prevTime;
 		prevTime = glfwGetTime();
+
+		update(delta);
 
 		glfwSwapBuffers(window);
 		glfwPollEvents();
