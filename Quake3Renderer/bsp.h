@@ -141,9 +141,9 @@ typedef struct {
 	BSP_LIGHTVOLUME* lightvolumes;
 	int n_lightvolumes;
 	BSP_VISDATA* visdata;
-} BSP;
+} BSP_DATA;
 
-BSP* loadbsp(char* data);
-void freebsp(BSP* bsp);
+BSP_DATA* loadbsp(char* data);
+void freebsp(BSP_DATA* bsp);
 
 #endif 

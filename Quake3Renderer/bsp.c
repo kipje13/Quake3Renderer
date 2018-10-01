@@ -11,11 +11,11 @@ typedef struct
 	int length;
 } BSP_LUMP;
 
-BSP* loadbsp(char* data)
+BSP_DATA* loadbsp(char* data)
 {
 	BSP_LUMP* lumps;
 
-	BSP* bsp = (BSP*)malloc(sizeof(BSP));
+	BSP_DATA* bsp = (BSP_DATA*)malloc(sizeof(BSP_DATA));
 
 	if (memcmp(data, "IBSP", 4) != 0)
 		return NULL;
@@ -75,7 +75,7 @@ BSP* loadbsp(char* data)
 	return bsp;
 }
 
-void freebsp(BSP* bsp)
+void freebsp(BSP_DATA* bsp)
 {
 	free(bsp);
 }
