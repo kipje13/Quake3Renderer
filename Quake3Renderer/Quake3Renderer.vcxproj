@@ -129,7 +129,7 @@
     <ClCompile Include="game.c" />
     <ClCompile Include="glad.c" />
     <ClCompile Include="main.c" />
-    <ClCompile Include="matrix.cpp" />
+    <ClCompile Include="matrix.c" />
     <ClCompile Include="pk3.c" />
     <ClCompile Include="shaders.c" />
     <ClCompile Include="window.c" />

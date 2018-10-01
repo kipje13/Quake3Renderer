@@ -33,6 +33,8 @@ void load()
 
 void start()
 {
+	glEnable(GL_DEPTH_TEST);
+
 	char* vertex =
 		"#version 430 core\n\
 		layout(location = 0) in vec3 aPos;\n\
@@ -47,9 +49,11 @@ void start()
 		out vec3 oNormal;\n\
 		out vec4 oColor;\n\
 		\n\
+		uniform mat4 projectionview;\
+		\n\
 		void main()\n\
 		{\n\
-			gl_Position = vec4(aPos.x/1000, aPos.y/1000, aPos.z/1000, 1.0);\n\
+			gl_Position = projectionview * vec4(aPos.x, aPos.y, aPos.z, 1.0);\n\
 			oPos = aPos;\n\
 			oTexCoord = aTexCoord;\n\
 			oLMTexCoord = aLMTexCoord;\n\
@@ -97,6 +101,11 @@ void start()
 
 	glUseProgram(shader);
 
+	mat4 p = createPerspective(90, 1280, 720, 1, 10000);
+	mat4 t = createTranslation(makeVec3(0,0,-1000));
+
+	setShaderUniformMatrix4(shader, "projectionview", MultiplyM4(p, t));
+
 	renderobject = setupBsp(bsp);
 }
 
@@ -110,5 +119,9 @@ void update(double deltatime)
 
 void resize(GLFWwindow* window, int width, int height)
 {
-	
+	glViewport(0, 0, width, height);
+	mat4 p = createPerspective(90, width, height, 1, 10000);
+	mat4 t = createTranslation(makeVec3(0, 0, -1000));
+
+	setShaderUniformMatrix4(shader, "projectionview", MultiplyM4(p, t));
 }
