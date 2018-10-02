@@ -7,25 +7,13 @@
 
 #include <stdlib.h>
 
-void generateLightmaps(BSP_RENDEROBJECT* renderobject)
+BspRenderer::BspRenderer(BSP_DATA* bsp)
 {
-	BSP_DATA* bsp = renderobject->data;
-
-	glGenTextures(bsp->n_lightmaps, renderobject->lightmaps);
-
-	for (int i = 0; i < bsp->n_lightmaps; i++)
-	{
-		glBindTexture(GL_TEXTURE_2D, renderobject->lightmaps[i]);
-		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, 128, 128, 0, GL_RGB, GL_UNSIGNED_BYTE, bsp->lightmaps[i].data);
-		glGenerateMipmap(GL_TEXTURE_2D);
-	}
+	data = bsp;
 }
 
-BSP_RENDEROBJECT* setupBsp(BSP_DATA* bsp)
+void BspRenderer::setupBsp()
 {
-	BSP_RENDEROBJECT* renderobject = (BSP_RENDEROBJECT*)malloc(sizeof(BSP_RENDEROBJECT));
-
-	unsigned int VBO, VAO, EBO;
 	glGenVertexArrays(1, &VAO);
 	glGenBuffers(1, &VBO);
 	glGenBuffers(1, &EBO);
@@ -33,10 +21,10 @@ BSP_RENDEROBJECT* setupBsp(BSP_DATA* bsp)
 	glBindVertexArray(VAO);
 
 	glBindBuffer(GL_ARRAY_BUFFER, VBO);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(BSP_VERTEX) * bsp->n_vertices, bsp->vertices, GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(BSP_VERTEX) * data->n_vertices, data->vertices, GL_STATIC_DRAW);
 
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(BSP_MESHVERT) * bsp->n_meshverts, bsp->meshverts, GL_STATIC_DRAW);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(BSP_MESHVERT) * data->n_meshverts, data->meshverts, GL_STATIC_DRAW);
 
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(BSP_VERTEX), (void*)0);
 	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, sizeof(BSP_VERTEX), (void*)12);
@@ -53,18 +41,11 @@ BSP_RENDEROBJECT* setupBsp(BSP_DATA* bsp)
 
 	glBindVertexArray(0);
 
-	renderobject->data = bsp;
-	renderobject->EBO = EBO;
-	renderobject->VAO = VAO;
-	renderobject->VBO = VBO;
+	renderqueue = (BSP_FACE**)malloc(sizeof(BSP_FACE*) * data->n_faces);
 
-	renderobject->renderqueue = (BSP_FACE**)malloc(sizeof(BSP_FACE*) * bsp->n_faces);
+	lightmaps = (unsigned int*)malloc(sizeof(unsigned int)*data->n_lightmaps);
 
-	renderobject->lightmaps = (unsigned int*)malloc(sizeof(unsigned int)*bsp->n_lightmaps);
-
-	generateLightmaps(renderobject);
-
-	return renderobject;
+	generateLightmaps();
 }
 
 void fillRenderQueue(BSP_FACE** renderqueue, BSP_DATA* bsp, int* length)
@@ -77,24 +58,35 @@ void fillRenderQueue(BSP_FACE** renderqueue, BSP_DATA* bsp, int* length)
 	}
 }
 
-void renderBsp(BSP_RENDEROBJECT* renderobject)
+void BspRenderer::renderBsp()
 {
-	glBindVertexArray(renderobject->VAO);
-	//glActiveTexture(GL_TEXTURE0);
+	glBindVertexArray(VAO);
 
 	int length;
 
-	fillRenderQueue(renderobject->renderqueue, renderobject->data, &length);
+	fillRenderQueue(renderqueue, data, &length);
 
 	for (int i = 0; i < length; i++)
 	{
-		BSP_FACE* face = renderobject->renderqueue[i];
+		BSP_FACE* face = renderqueue[i];
 
 		if (face->lm_index > -1)
-			glBindTexture(GL_TEXTURE_2D, renderobject->lightmaps[face->lm_index]);
+			glBindTexture(GL_TEXTURE_2D, lightmaps[face->lm_index]);
 
 		glDrawElementsBaseVertex(GL_TRIANGLES, face->n_meshverts, GL_UNSIGNED_INT, (void*)(face->meshvert*sizeof(int)), face->vertex);
 	}
 
 	glBindVertexArray(0);
+}
+
+void BspRenderer::generateLightmaps()
+{
+	glGenTextures(data->n_lightmaps, lightmaps);
+
+	for (int i = 0; i < data->n_lightmaps; i++)
+	{
+		glBindTexture(GL_TEXTURE_2D, lightmaps[i]);
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, 128, 128, 0, GL_RGB, GL_UNSIGNED_BYTE, data->lightmaps[i].data);
+		glGenerateMipmap(GL_TEXTURE_2D);
+	}
 }

@@ -35,7 +35,7 @@ int main()
 
 	glfwSetFramebufferSizeCallback(window, resize);
 
-	start();
+	start(window);
 
 	while (!glfwWindowShouldClose(window))
 	{

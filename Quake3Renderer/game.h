@@ -3,8 +3,10 @@
 
 #include <glfw/glfw3.h>
 
+
+
 void load();
-void start();
+void start(GLFWwindow* w);
 void update(double deltatime);
 void resize(GLFWwindow* window, int width, int height);
 

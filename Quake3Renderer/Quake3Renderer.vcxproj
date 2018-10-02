@@ -132,7 +132,6 @@
     <ClCompile Include="matrix.cpp" />
     <ClCompile Include="pk3.cpp" />
     <ClCompile Include="shaders.cpp" />
-    <ClCompile Include="window.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="bitstream.h" />
@@ -142,7 +141,6 @@
     <ClInclude Include="matrix.h" />
     <ClInclude Include="pk3.h" />
     <ClInclude Include="shaders.h" />
-    <ClInclude Include="window.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

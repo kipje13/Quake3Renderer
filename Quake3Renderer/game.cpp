@@ -11,10 +11,19 @@
 #include "bsprenderer.h"
 #include "matrix.h"
 
+GLFWwindow* window;
+
 BSP_DATA* bsp;
-BSP_RENDEROBJECT* renderobject;
+BspRenderer* bspRenderer;
 
 unsigned int shader;
+
+mat4 projectionmatrix;
+mat4 quake3matrix = { vec4{0, 0, -1, 0}, vec4{ -1, 0, 0, 0 }, vec4{ 0, 1, 0, 0 }, vec4{ 0, 0, 0, 1 } };
+
+vec3 campos = vec3{ 1000, 0, 0 };
+
+void input();
 
 void load()
 {
@@ -29,11 +38,13 @@ void load()
 
 	fclose(f);
 
-	bsp = loadbsp(bspdata);
+	bspRenderer = new BspRenderer(loadbsp(bspdata));
 }
 
-void start()
+void start(GLFWwindow* w)
 {
+	window = w;
+
 	glEnable(GL_DEPTH_TEST);
 
 	char* vertex =
@@ -104,12 +115,11 @@ void start()
 
 	glUseProgram(shader);
 
-	mat4 p = createPerspective(90, 1280, 720, 1, 10000);
-	mat4 t = createTranslation(makeVec3(0, 500, -1000));
+	projectionmatrix = createPerspective(90, 1280, 720, 1, 10000) * quake3matrix;
 
-	setShaderUniformMatrix4(shader, "projectionview", MultiplyM4(p, t));
+	
 
-	renderobject = setupBsp(bsp);
+	bspRenderer->setupBsp();
 }
 
 void update(double deltatime)
@@ -117,14 +127,38 @@ void update(double deltatime)
 	glClearColor(0.5f, 0.5f, 0.5f, 1);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	renderBsp(renderobject);
+	input();
+
+	setShaderUniformMatrix4(shader, "projectionview", projectionmatrix * createTranslation(campos));
+
+	bspRenderer->renderBsp();
 }
 
 void resize(GLFWwindow* window, int width, int height)
 {
 	glViewport(0, 0, width, height);
-	mat4 p = createPerspective(90, width, height, 1, 10000);
-	mat4 t = createTranslation(makeVec3(0, 500, -1000));
+	projectionmatrix = createPerspective(90, width, height, 1, 10000) * quake3matrix;
+}
 
-	setShaderUniformMatrix4(shader, "projectionview", MultiplyM4(p, t));
+void input()
+{
+	if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
+	{
+		campos.x -= 10;
+	}
+
+	if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
+	{
+		campos.x += 10;
+	}
+
+	if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
+	{
+		campos.y -= 10;
+	}
+
+	if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
+	{
+		campos.y += 10;
+	}
 }

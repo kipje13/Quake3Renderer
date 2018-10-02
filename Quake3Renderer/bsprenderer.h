@@ -3,17 +3,21 @@
 
 #include "bsp.h"
 
-typedef struct {
+class BspRenderer
+{
+private:
 	BSP_DATA* data;
-	unsigned int VBO;
-	unsigned int VAO;
-	unsigned int EBO;
+	unsigned int VBO, VAO, EBO;
 	BSP_FACE** renderqueue;
 	unsigned int* lightmaps;
-} BSP_RENDEROBJECT;
 
-BSP_RENDEROBJECT* setupBsp(BSP_DATA* bsp);
-void renderBsp(BSP_RENDEROBJECT* renderobject);
+	void generateLightmaps();
+
+public:
+	BspRenderer(BSP_DATA* bsp);
+	void setupBsp();
+	void renderBsp();
+};
 
 #endif 
 

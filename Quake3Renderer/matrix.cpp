@@ -104,18 +104,18 @@ mat4 createPerspective(float fov, int width, int height, float znear, float zfar
 	return m;
 }
 
-vec4 multiplyV4C(vec4 a, float s)
+vec4 operator*(vec4 v, float s)
 {
-	vec4 v = { a.x * s, a.y * s, a.z * s, a.w * s };
-	return v;
+	vec4 r = { v.x * s, v.y * s, v.z * s, v.w * s };
+	return r;
 }
 
-vec4 multiplyM4V4(mat4 m, vec4 v)
+vec4 operator*(mat4 m, vec4 v)
 {
-	m.column[0] = multiplyV4C(m.column[0], v.x);
-	m.column[1] = multiplyV4C(m.column[1], v.y);
-	m.column[2] = multiplyV4C(m.column[2], v.z);
-	m.column[3] = multiplyV4C(m.column[3], v.w);
+	m.column[0] = m.column[0] * v.x;
+	m.column[1] = m.column[1] * v.y;
+	m.column[2] = m.column[2] * v.z;
+	m.column[3] = m.column[3] * v.w;
 
 	float x = m.column[0].x + m.column[1].x + m.column[2].x + m.column[3].x;
 	float y = m.column[0].y + m.column[1].y + m.column[2].y + m.column[3].y;
@@ -127,13 +127,13 @@ vec4 multiplyM4V4(mat4 m, vec4 v)
 	return r;
 }
 
-mat4 MultiplyM4(mat4 a, mat4 b)
+mat4 operator*(mat4 a, mat4 b)
 {
 	mat4 m = {
-		multiplyM4V4(a, b.column[0]),
-		multiplyM4V4(a, b.column[1]),
-		multiplyM4V4(a, b.column[2]),
-		multiplyM4V4(a, b.column[3])
+		a * b.column[0],
+		a * b.column[1],
+		a * b.column[2],
+		a * b.column[3]
 	};
 
 	return m;
@@ -152,16 +152,4 @@ float length(vec3 v)
 float lengthSquared(vec3 v)
 {
 	return v.x*v.x + v.y*v.y + v.z*v.z;
-}
-
-vec3 makeVec3(float x, float y, float z)
-{
-	vec3 v = { x, y, z };
-	return v;
-}
-
-vec4 makeVec4(float x, float y, float z, float w)
-{
-	vec4 v = { x, y, z, w };
-	return v;
 }
