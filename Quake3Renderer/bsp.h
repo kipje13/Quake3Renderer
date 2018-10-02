@@ -105,7 +105,7 @@ typedef struct {
 typedef struct {
 	int n_vecs;
 	int sz_vecs;
-	unsigned char* vecs;
+	char* vecs;
 } BSP_VISDATA;
 
 typedef struct {

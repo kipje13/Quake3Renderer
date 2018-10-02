@@ -9,6 +9,7 @@
 #include "shaders.h"
 #include "bsp.h"
 #include "bsprenderer.h"
+#include "matrix.h"
 
 BSP_DATA* bsp;
 BSP_RENDEROBJECT* renderobject;

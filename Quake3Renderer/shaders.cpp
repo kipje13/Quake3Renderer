@@ -25,12 +25,12 @@ int createShaderProgram(unsigned int vertexShader, unsigned int fragmentShader, 
 	glLinkProgram(*shaderProgram);
 
 	int success;
-	glGetProgramiv(shaderProgram, GL_LINK_STATUS, &success);
+	glGetProgramiv((GLuint)shaderProgram, GL_LINK_STATUS, &success);
 
 	return success;
 }
 
-void setShaderUniformMatrix4(unsigned int* shaderProgram, char* name, mat4 matrix)
+void setShaderUniformMatrix4(unsigned int shaderProgram, char* name, mat4 matrix)
 {
-	glUniformMatrix4fv(glGetUniformLocation(shaderProgram, name), 1, GL_FALSE, &matrix);
+	glUniformMatrix4fv(glGetUniformLocation((GLuint)shaderProgram, name), 1, GL_FALSE, (float*)&matrix);
 }

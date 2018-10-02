@@ -1,8 +1,10 @@
 #include "bitstream.h"
 
+#include <stdlib.h>
+
 BITSTREAM* createBitStream(char* buffer, int length)
 {
-	BITSTREAM* bitstream = malloc(sizeof(BITSTREAM));
+	BITSTREAM* bitstream = (BITSTREAM*)malloc(sizeof(BITSTREAM));
 	bitstream->buffer = buffer;
 	bitstream->length = length;
 	bitstream->pos = 0;

@@ -1,25 +1,25 @@
 #ifndef MATRIX_H
 #define MATRIX_H
 
-typedef struct
+struct vec3
 {
 	float x;
 	float y;
 	float z;
-} vec3;
+};
 
-typedef struct
+struct vec4
 {
 	float x;
 	float y;
 	float z;
 	float w;
-} vec4;
+};
 
-typedef struct
+struct mat4
 {
 	vec4 column[4];
-} mat4;
+};
 
 mat4 identityMatrix();
 

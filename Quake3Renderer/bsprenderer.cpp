@@ -5,6 +5,8 @@
 
 #include "bsp.h"
 
+#include <stdlib.h>
+
 void generateLightmaps(BSP_RENDEROBJECT* renderobject)
 {
 	BSP_DATA* bsp = renderobject->data;
@@ -65,7 +67,7 @@ BSP_RENDEROBJECT* setupBsp(BSP_DATA* bsp)
 	return renderobject;
 }
 
-void fillRenderQueue(BSP_FACE** renderqueue, BSP_DATA* bsp, unsigned int* length)
+void fillRenderQueue(BSP_FACE** renderqueue, BSP_DATA* bsp, int* length)
 {
 	*length = bsp->models[0].n_faces;
 
@@ -73,8 +75,6 @@ void fillRenderQueue(BSP_FACE** renderqueue, BSP_DATA* bsp, unsigned int* length
 	{
 		renderqueue[i] = (BSP_FACE*)(bsp->faces + bsp->models[0].face + i);
 	}
-	
-	return renderqueue;
 }
 
 void renderBsp(BSP_RENDEROBJECT* renderobject)
@@ -93,7 +93,7 @@ void renderBsp(BSP_RENDEROBJECT* renderobject)
 		if (face->lm_index > -1)
 			glBindTexture(GL_TEXTURE_2D, renderobject->lightmaps[face->lm_index]);
 
-		glDrawElementsBaseVertex(GL_TRIANGLES, face->n_meshverts, GL_UNSIGNED_INT, face->meshvert*sizeof(int), face->vertex);
+		glDrawElementsBaseVertex(GL_TRIANGLES, face->n_meshverts, GL_UNSIGNED_INT, (void*)(face->meshvert*sizeof(int)), face->vertex);
 	}
 
 	glBindVertexArray(0);

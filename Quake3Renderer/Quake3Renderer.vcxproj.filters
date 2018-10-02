@@ -18,31 +18,31 @@
     <ClCompile Include="glad.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="main.c">
+    <ClCompile Include="bitstream.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="pk3.c">
+    <ClCompile Include="bsp.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="window.c">
+    <ClCompile Include="bsprenderer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="bsp.c">
+    <ClCompile Include="game.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="game.c">
+    <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="bitstream.c">
+    <ClCompile Include="matrix.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="bsprenderer.c">
+    <ClCompile Include="pk3.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="shaders.c">
+    <ClCompile Include="shaders.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="matrix.c">
+    <ClCompile Include="window.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

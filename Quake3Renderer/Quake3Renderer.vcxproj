@@ -123,16 +123,16 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="bitstream.c" />
-    <ClCompile Include="bsp.c" />
-    <ClCompile Include="bsprenderer.c" />
-    <ClCompile Include="game.c" />
+    <ClCompile Include="bitstream.cpp" />
+    <ClCompile Include="bsp.cpp" />
+    <ClCompile Include="bsprenderer.cpp" />
+    <ClCompile Include="game.cpp" />
     <ClCompile Include="glad.c" />
-    <ClCompile Include="main.c" />
-    <ClCompile Include="matrix.c" />
-    <ClCompile Include="pk3.c" />
-    <ClCompile Include="shaders.c" />
-    <ClCompile Include="window.c" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="matrix.cpp" />
+    <ClCompile Include="pk3.cpp" />
+    <ClCompile Include="shaders.cpp" />
+    <ClCompile Include="window.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="bitstream.h" />
