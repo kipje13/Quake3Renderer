@@ -5,6 +5,20 @@
 
 #include "bsp.h"
 
+void generateLightmaps(BSP_RENDEROBJECT* renderobject)
+{
+	BSP_DATA* bsp = renderobject->data;
+
+	glGenTextures(bsp->n_lightmaps, renderobject->lightmaps);
+
+	for (int i = 0; i < bsp->n_lightmaps; i++)
+	{
+		glBindTexture(GL_TEXTURE_2D, renderobject->lightmaps[i]);
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, 128, 128, 0, GL_RGB, GL_UNSIGNED_BYTE, bsp->lightmaps[i].data);
+		glGenerateMipmap(GL_TEXTURE_2D);
+	}
+}
+
 BSP_RENDEROBJECT* setupBsp(BSP_DATA* bsp)
 {
 	BSP_RENDEROBJECT* renderobject = (BSP_RENDEROBJECT*)malloc(sizeof(BSP_RENDEROBJECT));
@@ -44,6 +58,10 @@ BSP_RENDEROBJECT* setupBsp(BSP_DATA* bsp)
 
 	renderobject->renderqueue = (BSP_FACE**)malloc(sizeof(BSP_FACE*) * bsp->n_faces);
 
+	renderobject->lightmaps = (unsigned int*)malloc(sizeof(unsigned int)*bsp->n_lightmaps);
+
+	generateLightmaps(renderobject);
+
 	return renderobject;
 }
 
@@ -62,6 +80,7 @@ void fillRenderQueue(BSP_FACE** renderqueue, BSP_DATA* bsp, unsigned int* length
 void renderBsp(BSP_RENDEROBJECT* renderobject)
 {
 	glBindVertexArray(renderobject->VAO);
+	//glActiveTexture(GL_TEXTURE0);
 
 	int length;
 
@@ -70,6 +89,9 @@ void renderBsp(BSP_RENDEROBJECT* renderobject)
 	for (int i = 0; i < length; i++)
 	{
 		BSP_FACE* face = renderobject->renderqueue[i];
+
+		if (face->lm_index > -1)
+			glBindTexture(GL_TEXTURE_2D, renderobject->lightmaps[face->lm_index]);
 
 		glDrawElementsBaseVertex(GL_TRIANGLES, face->n_meshverts, GL_UNSIGNED_INT, face->meshvert*sizeof(int), face->vertex);
 	}

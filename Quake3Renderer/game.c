@@ -69,11 +69,13 @@ void start()
 		in vec3 oNormal;\n\
 		in vec4 oColor;\n\
 		\n\
+		uniform sampler2D lightmap;\n\
+		\n\
 		out vec4 FragColor;\n\
 		\n\
 		void main()\n\
 		{\n\
-			FragColor = vec4(oTexCoord.x, oTexCoord.y, 0.2f, 1.0f);\n\
+			FragColor = texture(lightmap, oLMTexCoord);\n\
 		}";
 
 	unsigned int vs, fs;
@@ -102,7 +104,7 @@ void start()
 	glUseProgram(shader);
 
 	mat4 p = createPerspective(90, 1280, 720, 1, 10000);
-	mat4 t = createTranslation(makeVec3(0,0,-1000));
+	mat4 t = createTranslation(makeVec3(0, 500, -1000));
 
 	setShaderUniformMatrix4(shader, "projectionview", MultiplyM4(p, t));
 
@@ -121,7 +123,7 @@ void resize(GLFWwindow* window, int width, int height)
 {
 	glViewport(0, 0, width, height);
 	mat4 p = createPerspective(90, width, height, 1, 10000);
-	mat4 t = createTranslation(makeVec3(0, 0, -1000));
+	mat4 t = createTranslation(makeVec3(0, 500, -1000));
 
 	setShaderUniformMatrix4(shader, "projectionview", MultiplyM4(p, t));
 }

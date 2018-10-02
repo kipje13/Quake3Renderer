@@ -9,6 +9,7 @@ typedef struct {
 	unsigned int VAO;
 	unsigned int EBO;
 	BSP_FACE** renderqueue;
+	unsigned int* lightmaps;
 } BSP_RENDEROBJECT;
 
 BSP_RENDEROBJECT* setupBsp(BSP_DATA* bsp);

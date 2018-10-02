@@ -93,7 +93,7 @@ typedef struct {
 } BSP_FACE;
 
 typedef struct {
-	char* data;
+	char data[128][128][3];
 } BSP_LIGHTMAP;
 
 typedef struct {
