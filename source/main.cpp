@@ -1,7 +1,7 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
-#include "game.h"
+#include <game.h>
 
 #include <stdio.h>
 #include <stdlib.h>

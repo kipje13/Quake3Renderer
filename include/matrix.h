@@ -35,6 +35,8 @@ vec4 operator *(vec4 v, float s);
 vec4 operator *(mat4 m, vec4 v);
 mat4 operator *(mat4 a, mat4 b);
 
+vec3 operator +(vec3 a, vec3 b);
+
 
 float dot(vec3 a, vec3 b);
 float length(vec3 v);

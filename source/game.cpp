@@ -10,6 +10,7 @@
 #include "bsp.h"
 #include "bsprenderer.h"
 #include "matrix.h"
+#include "transform.h"
 
 GLFWwindow* window;
 
@@ -22,6 +23,8 @@ mat4 projectionmatrix;
 mat4 quake3matrix = { vec4{0, 0, -1, 0}, vec4{ -1, 0, 0, 0 }, vec4{ 0, 1, 0, 0 }, vec4{ 0, 0, 0, 1 } };
 
 vec3 campos = vec3{ 1000, 0, 0 };
+
+Transform* camera;
 
 void input();
 
@@ -43,6 +46,8 @@ void load()
 
 void start(GLFWwindow* w)
 {
+	camera = new Transform();
+
 	window = w;
 
 	glEnable(GL_DEPTH_TEST);
@@ -129,7 +134,7 @@ void update(double deltatime)
 
 	input();
 
-	setShaderUniformMatrix4(shader, "projectionview", projectionmatrix * createTranslation(campos));
+	setShaderUniformMatrix4(shader, "projectionview", projectionmatrix);
 
 	bspRenderer->renderBsp();
 }
@@ -144,21 +149,21 @@ void input()
 {
 	if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
 	{
-		campos.x -= 10;
+		camera->translateLocal(vec3{ -10, 0, 0 });
 	}
 
 	if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
 	{
-		campos.x += 10;
+		camera->translateLocal(vec3{ 10, 0, 0 });
 	}
 
 	if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
 	{
-		campos.y -= 10;
+		camera->translateLocal(vec3{ 0, -10, 0 });
 	}
 
 	if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
 	{
-		campos.y += 10;
+		camera->translateLocal(vec3{ 0, 10, 0 });
 	}
 }
