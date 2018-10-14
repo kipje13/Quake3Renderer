@@ -3,3 +3,4 @@ build
 CMakeFiles
 Quake3Renderer.dir
 Win32/Debug/ZERO_CHECK/ZERO_CHECK.log
+run.bat

@@ -18,8 +18,18 @@ set(SOURCES source/glad.c
 			source/shaders.cpp
 			source/transform.cpp)
 
+set(HEADERS include/bitstream.h
+            include/bsp.h
+            include/bsprenderer.h
+            include/camera.h
+            include/game.h
+            include/matrix.h
+            include/pk3.h
+            include/shaders.h
+            include/transform.h)
+
 add_compile_options(-D GLFW_INCLUDE_NONE)
-add_executable(Quake3Renderer source/main.cpp ${SOURCES})
+add_executable(Quake3Renderer source/main.cpp ${SOURCES} ${HEADERS})
 
 include_directories( ${OPENGL_INCLUDE_DIRS} ${PROJECT_SOURCE_DIR}/include)
 

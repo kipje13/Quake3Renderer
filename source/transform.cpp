@@ -25,5 +25,5 @@ void Transform::rotate(vec3 v)
 
 mat4 Transform::getMatrix()
 {
-	return createTranslation(pos) * rot;
+	return createTranslation(pos);
 }

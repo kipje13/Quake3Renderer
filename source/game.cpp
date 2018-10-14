@@ -28,9 +28,9 @@ Transform* camera;
 
 void input();
 
-void load()
+void load(char* mapfile)
 {
-	FILE* f = fopen("G:\\Github\\Quake3Renderer\\Debug\\ct3tourney3.bsp", "rb");
+	FILE* f = fopen(mapfile, "rb");
 
 	fseek(f, 0, SEEK_END);
 	int filesize = ftell(f);

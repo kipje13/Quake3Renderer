@@ -1,16 +1,27 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
-#include <game.h>
+#include "game.h"
 
 #include <stdio.h>
 #include <stdlib.h>
 
 double prevTime = 0;
 
-int main()
+bool fileExists(const char* path);
+
+int main(int argc, char **argv)
 {
-	load();
+	if (argc < 2 || !fileExists(argv[1]))
+	{
+		printf("No file passed or file could not be found.");
+		return 0;
+	}
+	
+	char* maptoload = (char*)malloc((strlen(argv[1]) + 1) * sizeof(char));
+	strcpy(maptoload, argv[1]);
+
+	load(maptoload);
 
 	glfwInit();
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
@@ -49,4 +60,17 @@ int main()
 	}
 
 	return 0;
+}
+
+bool fileExists(const char* path) 
+{
+	if (FILE *file = fopen(path, "r")) 
+	{
+		fclose(file);
+		return true;
+	}
+	else 
+	{
+		return false;
+	}
 }
