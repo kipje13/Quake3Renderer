@@ -4,6 +4,7 @@
 
 Transform::Transform()
 {
+	pos = vec3{ 0, 0, 0 };
 	rot = identityMatrix();
 }
 
@@ -25,5 +26,5 @@ void Transform::rotate(vec3 v)
 
 mat4 Transform::getMatrix()
 {
-	return createTranslation(pos);
+	return createTranslation(pos) * rot;
 }

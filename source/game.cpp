@@ -134,7 +134,7 @@ void update(double deltatime)
 
 	input();
 
-	setShaderUniformMatrix4(shader, "projectionview", projectionmatrix);
+	setShaderUniformMatrix4(shader, "projectionview", projectionmatrix * camera->getMatrix());
 
 	bspRenderer->renderBsp();
 }
