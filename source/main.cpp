@@ -8,6 +8,8 @@
 
 double prevTime = 0;
 
+
+
 bool fileExists(const char* path);
 
 int main(int argc, char **argv)

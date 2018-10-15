@@ -25,6 +25,7 @@ mat4 quake3matrix = { vec4{0, 0, -1, 0}, vec4{ -1, 0, 0, 0 }, vec4{ 0, 1, 0, 0 }
 vec3 campos = vec3{ 1000, 0, 0 };
 
 Transform* camera;
+float angle = 0;
 
 void input();
 
@@ -165,5 +166,27 @@ void input()
 	if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
 	{
 		camera->translateLocal(vec3{ 0, 10, 0 });
+	}
+
+	if (glfwGetKey(window, GLFW_KEY_LEFT_CONTROL) == GLFW_PRESS)
+	{
+		camera->translateLocal(vec3{ 0, 0, 10 });
+	}
+
+	if (glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS)
+	{
+		camera->translateLocal(vec3{ 0, 0, -10 });
+	}
+
+	if (glfwGetKey(window, GLFW_KEY_E) == GLFW_PRESS)
+	{
+		angle += 0.03;
+		camera->rotate(vec3{ 0, 0, angle });
+	}
+
+	if (glfwGetKey(window, GLFW_KEY_Q) == GLFW_PRESS)
+	{
+		angle -= 0.03;
+		camera->rotate(vec3{ 0, 0, angle });
 	}
 }

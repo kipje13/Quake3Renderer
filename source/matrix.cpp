@@ -104,6 +104,34 @@ mat4 createPerspective(float fov, int width, int height, float znear, float zfar
 	return m;
 }
 
+mat4 transpose(mat4 m)
+{
+	mat4 r;
+
+	r.column[0].x = m.column[0].x;
+	r.column[0].y = m.column[1].x;
+	r.column[0].z = m.column[2].x;
+	r.column[0].w = m.column[3].x;
+
+	r.column[1].x = m.column[0].y;
+	r.column[1].y = m.column[1].y;
+	r.column[1].z = m.column[2].y;
+	r.column[1].w = m.column[3].y;
+
+	r.column[2].x = m.column[0].z;
+	r.column[2].y = m.column[1].z;
+	r.column[2].z = m.column[2].z;
+	r.column[2].w = m.column[3].z;
+
+	r.column[3].x = m.column[0].w;
+	r.column[3].y = m.column[1].w;
+	r.column[3].z = m.column[2].w;
+	r.column[3].w = m.column[3].w;
+
+	return r;
+}
+
+
 vec4 operator*(vec4 v, float s)
 {
 	vec4 r = { v.x * s, v.y * s, v.z * s, v.w * s };

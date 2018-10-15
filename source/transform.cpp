@@ -10,7 +10,7 @@ Transform::Transform()
 
 void Transform::translateLocal(vec3 v)
 {
-	vec4 n = rot * vec4{ v.x, v.y, v.z, 1 };
+	vec4 n = transpose(rot) * vec4{ v.x, v.y, v.z, 1 };
 	pos = pos + vec3{n.x, n.y, n.z};
 }
 
@@ -26,5 +26,5 @@ void Transform::rotate(vec3 v)
 
 mat4 Transform::getMatrix()
 {
-	return createTranslation(pos) * rot;
+	return rot * createTranslation(pos);
 }

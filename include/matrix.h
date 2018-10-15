@@ -31,6 +31,8 @@ mat4 createRotationZ(float angle);
 
 mat4 createPerspective(float fov, int width, int height, float znear, float zfar);
 
+mat4 transpose(mat4 m);
+
 vec4 operator *(vec4 v, float s);
 vec4 operator *(mat4 m, vec4 v);
 mat4 operator *(mat4 a, mat4 b);
