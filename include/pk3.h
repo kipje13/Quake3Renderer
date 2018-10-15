@@ -1,6 +1,7 @@
 #pragma once
 
 #include <stdio.h>
+#include <stddef.h>
 
 typedef struct
 {
@@ -17,4 +18,4 @@ typedef struct
 
 PK3FILE* openpk3(const char* path);
 void closepk3(PK3FILE* pk3);
-char* loadfile(PK3FILE* pk3, const char* filename);
+char* loadfile(PK3FILE* pk3, const char* filename, size_t *size);

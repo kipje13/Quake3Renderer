@@ -4,6 +4,7 @@
 #include <glfw/glfw3.h>
 
 #include <stdio.h>
+#include <stddef.h>
 #include <stdlib.h>
 
 #include "shaders.h"
@@ -11,6 +12,9 @@
 #include "bsprenderer.h"
 #include "matrix.h"
 #include "transform.h"
+#include "pk3.h"
+
+#include <miniz_tinfl.h>
 
 GLFWwindow* window;
 
@@ -31,16 +35,10 @@ void input();
 
 void load(char* mapfile)
 {
-	FILE* f = fopen(mapfile, "rb");
+	PK3FILE* pk3file = openpk3(mapfile);
 
-	fseek(f, 0, SEEK_END);
-	int filesize = ftell(f);
-	rewind(f);
-
-	char* bspdata = (char*)malloc(sizeof(char) * filesize);
-	fread(bspdata, sizeof(char), filesize, f);
-
-	fclose(f);
+	size_t size;
+	char* bspdata = loadfile(pk3file, "maps/q3ctf2.bsp", &size);
 
 	bspRenderer = new BspRenderer(loadbsp(bspdata));
 }

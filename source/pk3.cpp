@@ -4,6 +4,8 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include <miniz_tinfl.h>
+
 int getfileindex(PK3FILE* pk3, const char* filename)
 {
 	FILEINFO* files = pk3->files;
@@ -100,7 +102,7 @@ void closepk3(PK3FILE* pk3)
 	fclose(pk3->stream);
 }
 
-char* loadfile(PK3FILE* pk3, const char* filename)
+char* loadfile(PK3FILE* pk3, const char* filename, size_t* size)
 {
 	int fileindex = getfileindex(pk3, filename);
 
@@ -125,9 +127,13 @@ char* loadfile(PK3FILE* pk3, const char* filename)
 
 	fseek(f, files[fileindex].offset + 30 + n + m, 0);
 
-	char* data = (char*)malloc(sizeof(char) * uncompressed);
+	char* data = (char*)malloc(sizeof(char) * compressed);
 	fread(data, sizeof(char), compressed, f);
 
-	return data;
+	char* decompressedData = (char*)tinfl_decompress_mem_to_heap(data, compressed, size, 0);
+
+	free(data);
+
+	return decompressedData;
 }
 
